@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <title>  {{__('translation.title')}}   </title>
@@ -16,7 +16,7 @@
     </head>
 <body>
 <section class="ftco-section">
-    <x-langselector />
+  
 <div class="container">
 <div class="row justify-content-center">
     <img class="rounded " src="{{asset('ban.png')}}" alt="" width="100%" >
@@ -45,19 +45,49 @@
 </p>
 </div>
 </div>
-<form method="POST" action="{{route('login')}}">
+<form method="POST" action="{{route('login')}}" style="text-align:right">
     @csrf
-<div class="form-group mb-3">
+   
+
+<div class="form-group mb-3" >
 <label class="label" for="email"> {{ __('translation.email') }}</label>
-<input type="text" class="form-control" name="email" placeholder="Email" required="">
+<input type="email" class="form-control @error('email') is-invalid @enderror"  name="email"  id="email" placeholder="mail@univ-alger.dz" value="{{ old('email') }}" required autocomplete="email" autofocus>
+<p id="emailerror" style="color: red;"></p>
+@error('email')
+<span class="invalid-feedback" role="alert">
+    <strong>{{ $message }}</strong>
+</span>
+@enderror
 </div>
+
 <div class="form-group mb-3">
 <label class="label" for="password">{{ __('translation.password') }}</label>
-<input type="password" class="form-control" name="password" placeholder="Password" required="">
+<input type="password"  name="password" placeholder="Password" required
+class="form-control @error('password') is-invalid @enderror" autocomplete="current-password">
+@error('password')
+<span class="invalid-feedback" role="alert">
+    <strong>{{ $message }}</strong>
+</span>
+@enderror
 </div>
+
+<div class="row mb-0">
+    <div class="col-md-8 offset-md-4">
+        <button type="submit" class="btn btn-primary">
+            {{ __('translation.btn_login') }}
+        </button>
+
+        @if (Route::has('password.request'))
+            <a class="btn btn-link" href="{{ route('password.request') }}">
+                {{ __('validation.ForgotPassword') }}
+            </a>
+        @endif
+    </div>
+</div>
+<br>{{--
 <div class="form-group">
 <button type="submit" class="form-control btn btn-primary submit px-3">S'identifier - تسجيل الدخول</button>
-</div>
+</div>--}}
 </form>
 <div class="form-group">
     <a href="{{ route('register') }}"  style="color: white">
@@ -76,5 +106,17 @@
 </div>
 </div>
 </section>
+<script type="text/javascript">
 
+email.onchange = function() {
+    let univreg=/\w+(.)?\w+(@univ-alger.dz)/ig;
+    if(email.value.match(univreg)){ 
+        emailerror.innerHTML =' '
+       
+    }
+    else { 
+    emailerror.innerHTML ='بريد إلكتروني خاطئ'
+    }
+};
+</script>
 </body></html>

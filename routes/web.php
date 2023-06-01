@@ -21,8 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('/');
 
-Auth::routes();
-//Auth::routes(['login' => false]);
+Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified'])->group( function(){
     
@@ -30,9 +29,13 @@ Route::middleware(['auth', 'verified'])->group( function(){
 
     Route::get('/candidat', [CandidatController::class, 'index'])->name('candidat');
     Route::post('/candidat', [CandidatController::class, 'store'])->name('candidat.store');
+    
+    Route::get('/candidat_doc', [CandidatController::class, 'addDocuments'])->name('documents');
+    Route::post('/candidat_doc', [CandidatController::class, 'store_addDocuments'])->name('documents.store');
+
     Route::get('/student_home', [CandidatController::class, 'candidatIndex'])->name('candidat.home');
     Route::get('/print',[CandidatController::class, 'print'])->name('print');
-    Route::get('/show_uploaded_file',[CandidatController::class, 'show_uploaded_file'])->name('show_uploaded_file');
+    Route::get('/show_uploaded_file/{document}',[CandidatController::class, 'show_uploaded_file'])->name('show_uploaded_file');
     
     //http://localhost/master-multi-guard-auth/public/storage/uploads/
     Route::get('/storage/{folder}/{file}.pdf');

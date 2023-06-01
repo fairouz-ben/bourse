@@ -30,7 +30,7 @@
                 <h4 class="mb-3">{{__('translation.ask')}}</h4>
                 <hr>
                 <h5>{{__('translation.info_personal')}}</h5>
-                <form method="POST" action="{{ url('store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('candidat.store') }}" enctype="multipart/form-data">
                   @csrf
                   <input type="hidden" name="user_id" value="{{$user->id}}">
                   <div class="card">
@@ -59,7 +59,11 @@
                     <select name="grade_id" id="grade_id" class="form-control" required>
                         <option value=""> ---</option>
                         @foreach ($grades as $g )
+                          @if(App::isLocale('ar'))
+                            <option value="{{$g->id}}">{{$g->titre_ar}}</option>
+                          @else
                             <option value="{{$g->id}}">{{$g->titre_fr}}</option>
+                            @endif
                         @endforeach
 
                     </select>
@@ -135,24 +139,6 @@
                 
                  
                   
-                    <div class="alert alert-danger" role="alert">
-                      {{ __('translation.doc_alert_message') }}
-                        
-                      </div>
-                 
-                  <div class="row g-3">
-                    <label for="file" class="col-md-3 col-form-label ">{{ __('translation.file') }}</label>
-        
-                    <div class="col-md-9">
-                        <input id="file" name="file"  type="file" accept="application/pdf" class="form-control @error('file') is-invalid @enderror"  required  >
-        
-                        @error('file')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
         
                   
                   

@@ -10,6 +10,7 @@ return[
 'french' => 'French',
 'login_msg'=>'You are logged in!',
 'btn_logout'=>'Logout',
+'btn_login'  =>'Login',
 'relex'=>' Vice-rectorat des relations extérieures ',
 'form_title'=>'Information form',
 'ask'=>'Please complete this form carefully ',
@@ -23,7 +24,7 @@ return[
 'date_nais'=>'Date of Birth',
 'relex_service'=>'Service',
 'phone'=>'phone',
-'email'=>'Email',
+'email'=>'Business email ',
 'password'=>'password',
 'password-confirm'=>'password confirmation',
 'fonction'=>'Fonction',
@@ -37,6 +38,7 @@ return[
 'file'=>'Document',
 
 'btn_submit_form'=>'Save the form',
-
+'btn_submit_files'=>'Save files',
+'note_file_check'=>'please check your uploaded file!',
 ];
 ?>

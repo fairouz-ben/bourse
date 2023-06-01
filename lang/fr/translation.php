@@ -11,6 +11,7 @@ return[
 'french' => 'Français',
 'login_msg'=>'Vous êtes connecté!',
 'btn_logout'=>'Se déconnecter',
+'btn_login'  =>' Se connecter',
 'register'=>'créer un compte',
 
 'ask'=>'Veuillez remplir soigneusement ce formulaire ',
@@ -21,7 +22,7 @@ return[
 'prenom_ar'=>'الإسم', 
 'prenom_fr'=>'Prenom(fr)', 
 'date_nais'=>'Date de naissance',
-'relex_service'=>'Service',
+'relex_service'=>'Lieu de travail',
 'fonction'=>'Fonction',
 'grade'=>'Grade',
 'pays'=>'Pays de destination',
@@ -31,7 +32,7 @@ return[
 'form_title'=>'Formulaire d\'information',
 'print'     => 'imprimer le formulaire d\'information', 
 'phone'=>'Téléphone',
-'email'=>'Email éléctronique',
+'email'=>'Email professional',
 'password'=>'mot de passe',
 'password-confirm'=>'Confirmer le mot de passe',
 
@@ -42,6 +43,7 @@ return[
 Veuillez fusionner les document en un seul Pdf
 واحد  PDF يرجى دمج المستندات في ملف',
 'btn_submit_form'=>'Enregistrer le formulaire',
-
+'btn_submit_files'=>'Enregistrer les fichiers',
+'note_file_check'=>'veuillez vérifier votre fichier téléchargé!',
 ];
 ?>

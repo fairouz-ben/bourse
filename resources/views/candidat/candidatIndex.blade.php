@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard.app')
 
 @section('content')
 <div class="container">
@@ -13,13 +13,26 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <h5>{{ Auth::user()->nom_ar }}</h5>
-                   
-                    <h5>  {{ __('translation.student') }}: </h5>
+                    <h5>{{Auth::user()->candidat->id}}</h5>
+                    
+                    <h5>  {{ __('translation.candidat') }}: {{ Auth::user()->nom_ar }}</h5>
                     <p> 
                         {{-- <a href="{{asset($student->file_path)}}"></a> --}}
-                      <br/>  <a href="{{ route('show_uploaded_file') }}" target="_blank" > {{ __('translation.note_file_check') }} </a>
-                   
+                        {{ __('translation.note_file_check') }}
+                         <ul>
+                            @if ($docs)
+                            @foreach ($docs as $doc )
+                            <li>
+                                <a href="{{ url('show_uploaded_file/'.$doc->id)}}" target="_blank" >{{ $doc->nom}}   </a>
+                           
+                            </li>
+                           
+                            @endforeach
+                                
+                            @endif
+
+                        </ul>
+                    <br/>  
                     </p>
                     <div class="row mt-3">
                         <div class="col-12 text-center">

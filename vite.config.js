@@ -7,7 +7,10 @@ export default defineConfig({
             input: [
                 'resources/sass/app.scss',
                 'resources/js/app.js',
+                'resources/js/dashboard.js',
                 'resources/css/bootstrap.rtl.min.css',
+                'resources/css/dashboard.css',
+                'resources/css/dashboard.rtl.css',
             ],
             refresh: true,
         }),

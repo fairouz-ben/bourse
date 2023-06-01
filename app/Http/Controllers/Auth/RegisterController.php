@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\IsCompositeUnique_Invoke;
+use App\Rules\EmailFormat;
 
 class RegisterController extends Controller
 {
@@ -59,7 +60,7 @@ class RegisterController extends Controller
             
             'phone' => ['required', 'string', 'max:10'],
             'relex_service_id'=> ['required', 'numeric', 'max:10'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', new EmailFormat($data['email']),'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -72,7 +73,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user= User::create([
+        $user = User::create([
             'relex_service_id' => $data['relex_service_id'],
             'nom_ar' => $data['nom_ar'],
             'nom_fr' => $data['nom_fr'],
@@ -84,9 +85,10 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-       
+        
         $user->addRole('candidat');
         return  $user;
+       // return back()->with('success','Candidat created successfully!');
         
     }
 }

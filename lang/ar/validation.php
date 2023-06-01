@@ -12,7 +12,9 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-
+    'ForgotPassword'=>'نسيت كلمة السر؟',
+    'password_form_note'=>"يجب أن تتكون كلمة المرور الخاصة بك من 8 أحرف على الأقل.",
+    'email_format'=>'يجب أن يكون البريد الإلكتروني بتنسيق معين (على سبيل المثال ، user@univ-alger.dz).',
     'accepted' => 'The :attribute must be accepted.',
     'accepted_if' => 'The :attribute must be accepted when :other is :value.',
     'active_url' => 'The :attribute is not a valid URL.',

@@ -19,7 +19,7 @@ class CandidatController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','verified']);
     }
 
    
@@ -33,8 +33,14 @@ class CandidatController extends Controller
             $candidat= Candidat::where(['user_id'=>Auth::user()->id])->get()->first();
             if( $candidat)
             {
-            
-                return view('candidat.candidatIndex')->with(['candidat'=>$candidat]);
+                $hasdocs=Document::where(['candidat_id'=>$candidat->id])->get();
+                if(!$hasdocs){
+
+                    //$this->addDocuments();
+                    return redirect()->route('documents');
+
+                }else
+                return view('candidat.candidatIndex')->with(['candidat'=>$candidat,'docs'=>$hasdocs]);
             }
             else {
                 $user=Auth::user();
@@ -90,7 +96,49 @@ class CandidatController extends Controller
             return view('candidat.candidatIndex')->with(['candidat'=>$candidat]);
         }
     }
-   
+   //Documents
+    public function addDocuments()
+    {
+        $candidat= Candidat::where(['user_id'=>Auth::user()->id])->get()->first();
+        $user=Auth::user();
+        if( $candidat)
+        {
+            return view('candidat.addDocuments')->with(['candidat'=>$candidat]);
+        } else  return redirect()->route('candidat');
+
+    }
+    public function store_addDocuments(Request $request)
+    {
+        //return (dd( $request['candidat_id']));
+        $nbfile=6;// Must do it with aouther ways!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
+        for($i=1;$i<=$nbfile; $i++){
+        
+            $candidat_doc= array();
+            if( $request['file_'.$i]!= null){
+
+                $fileName =  $request['candidat_id'].'_doc'.$i.'_'.time().'.'. $request->file->extension(); 
+                $filePath = $request->file('file')->storeAs('candidats_doc', $fileName);
+                $file_path_to_save='/storage/app/' . $filePath;    
+                
+                $candidat_doc= (['candidat_id'=> $request['candidat_id'],
+                                'nom'=> 'doc_'.$i,
+                                'file_path'=>$file_path_to_save
+                                ]);  
+                Document::create($candidat_doc);
+                flash('Document '. $i .'Successfully Added','success');
+                }                     
+        }
+      
+        
+
+        flash('Documents Successfully Added','success');
+        
+        return redirect()->route('candidat');
+        
+    }
+
+   //print 
 
     public function print()
     {
@@ -110,10 +158,31 @@ class CandidatController extends Controller
             
         } return 'error no candadat !';
     }
-    public function show_uploaded_file()
+    public function show_uploaded_file(Document $document)
     {  
-        
-        return ('show_uploaded_file');
+       // dd($document);
+      //  dd($document->file_path);
+       // dd($document->id);
+      // $document= Document::where(['id'=>$document])->get()->first();
+      // dd($document);
+
+      if( $document!= null){
+            
+                $file =base_path().$document->file_path; //app_path()  //base_path
+                
+           if (file_exists($file)) {
+
+                $headers = [
+                    'Content-Type' => 'application/pdf'
+                ];
+
+                return response()->download($file, 'uploaded_file', $headers, 'inline');
+            } else {
+               // echo ('File not found!');
+                abort(404, 'File not found!');
+            }
+        } else abort(404, 'File not found!');
+
     }
     public function edit()
     {

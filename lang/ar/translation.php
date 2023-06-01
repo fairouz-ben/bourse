@@ -8,7 +8,7 @@ return[
 'arabic'=>'العربية',
 
 
-'bt_login'  =>' الدخول',
+'btn_login'  =>' تسجيل الدخول',
     
 
 'english'=>'الإنجليزية',
@@ -26,9 +26,9 @@ return[
 'prenom_ar'=>'الإسم', 
 'prenom_fr'=>'Prenom(fr)', 
 'date_nais'=>'تاريخ الميلاد',
-'relex_service'=>'مصلحة',
+'relex_service'=>'مكان العمل',
 'phone'=>'الهاتف',
-'email'=>'بريد إلكتروني',
+'email'=>'بريد إلكتروني المهني',
 'password'=>'كلمة المرور',
 'password-confirm'=>'تأكيد كلمة المرور',
 'fonction'=>'الوظيفة',
@@ -45,6 +45,7 @@ Veuillez fusionner les document en un seul Pdf
 واحد  PDF يرجى دمج المستندات في ملف',
 
 'btn_submit_form'=>'حفظ الإستمارة',
-
+'btn_submit_files'=>'حفظ الملفات',
+'note_file_check'=>'يرجى التحقق من الملف الذي تم تحميله!',
 
 ];

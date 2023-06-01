@@ -12,7 +12,9 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-
+    'ForgotPassword'=>'Forgot Your Password?',
+    'password_form_note'=>"Your password must be at least 8 characters.",
+    'email_format'=>'The email must be in a specific format (e.g., user@univ-alger.dz).',
     'accepted' => 'The :attribute must be accepted.',
     'accepted_if' => 'The :attribute must be accepted when :other is :value.',
     'active_url' => 'The :attribute is not a valid URL.',

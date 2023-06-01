@@ -13,9 +13,14 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    
+    'failed' => "Ces informations d'identification ne correspondent pas à nos dossiers.",
+    'password' => 'Le mot de passe fourni est incorrect.',
+    'throttle' => 'Trop de tentatives de connexion. Veuillez réessayer dans : secondes secondes.',
+    'VerifyYourEmail'=>'Vérifiez votre adresse e-mail',
+    'VerifyText'=>'Un nouveau lien de vérification a été envoyé à votre adresse e-mail.',
+    'Before_proceeding'=>'Avant de continuer, veuillez vérifier votre e-mail pour un lien de vérification.',
+    'if_not'=>"Si vous n'avez pas reçu l'e-mail",
+    'clickTorequest'=>'cliquez ici pour en demander un autre',
+    'Remember_Me'=>'Se souvenir de moi',
 
 ];
