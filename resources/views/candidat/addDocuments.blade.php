@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard.app')
 
 @section('content')
 <div class="container">
@@ -6,13 +6,13 @@
         
        
         <main>
-            <div class="py-5 text-center">
+            {{--<div class="py-5 text-center">
               <img class="d-block mx-auto mb-4" src="{{asset('ban.png')}}" alt="logo" height="150px" width="600px">
               <h2></h2>
               <p class="lead">{{__('translation.relex_service')}}
-                <b>  {{Auth::user()->relex_service->nom_ar}}</b> 
+                <b>  {{Auth::user()->relex_service->name_ar}}</b> 
               </p>
-            </div>
+            </div>--}}
             <div class=" row mb-3">   
                 <div class="card-body">
                     @if (session('status'))
@@ -39,7 +39,7 @@
                       -
                       <b>{{Auth::user()->nom_fr}} {{Auth::user()->prenom_fr}} </b>
                         <br/>
-                        {{__('translation.relex_service')}}:<b>  {{Auth::user()->relex_service->nom_ar}}</b> 
+                        {{__('translation.relex_service')}}:<b>  {{Auth::user()->relex_service->name_ar}}</b> 
                     </div>
                   </div>
                   
@@ -53,7 +53,7 @@
                         
                       </div>
                  
-                  <div class="row g-3">
+                  {{--<div class="row g-3">
                     <label for="file" class="col-md-3 col-form-label ">{{ __('translation.file') }} الشامل</label>
         
                     <div class="col-md-4">
@@ -65,7 +65,7 @@
                             </span>
                         @enderror
                     </div>
-                </div>
+                </div>--}}
                 <div class="row g-3">
                   <label for="file_1" class="col-md-6 col-form-label ">{{ __('translation.file') }} 1
                     •	طلب خطي ممضي من طرف المسؤول المباشر

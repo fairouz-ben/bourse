@@ -39,7 +39,7 @@ return[
 
 'year_last'=>'سنة المنحة الأخيرة',
 'file'=>'تحميل الملف',
-'doc_alert_message'=>'يرجى إرفاق المستندات اللازمة في ملف واحد بتنسيق PDF: (الحجم الأقصى 10 ميجا بايت).',
+'doc_alert_message'=>'يرجى إرفاق المستندات اللازمة في ملف بتنسيق PDF: (الحجم الأقصى 8 ميجا بايت).',
 'doc_alert'=>'
 Veuillez fusionner les document en un seul Pdf
 واحد  PDF يرجى دمج المستندات في ملف',

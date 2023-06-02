@@ -38,7 +38,7 @@ return[
 
 'year_last'=>'l\'année de la dernier bourse',
 'file'=>'Joindre les Documents',
-'doc_alert_message'=>'Veuillez joindre les documents nécessaires dans un seul fichier en format PDF : ( taille max 4Mo)',
+'doc_alert_message'=>'Veuillez joindre les documents nécessaires dans un fichier en format PDF : ( taille max 8Mo)',
 'doc_alert'=>'
 Veuillez fusionner les document en un seul Pdf
 واحد  PDF يرجى دمج المستندات في ملف',

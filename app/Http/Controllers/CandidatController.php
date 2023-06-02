@@ -13,13 +13,13 @@ use Dotenv\Store\File\Paths;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
+use Ramsey\Uuid\Type\Integer;
 
 class CandidatController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth']);
     }
 
    
@@ -33,14 +33,17 @@ class CandidatController extends Controller
             $candidat= Candidat::where(['user_id'=>Auth::user()->id])->get()->first();
             if( $candidat)
             {
-                $hasdocs=Document::where(['candidat_id'=>$candidat->id])->get();
-                if(!$hasdocs){
+                $hasdoc=Document::where(['candidat_id'=>$candidat->id])->get()->first();
+                if(!$hasdoc){
 
                     //$this->addDocuments();
                     return redirect()->route('documents');
 
                 }else
+                {
+                    $hasdocs= Document::where(['candidat_id'=>$candidat->id,'is_deleted' => 0 ])->get();
                 return view('candidat.candidatIndex')->with(['candidat'=>$candidat,'docs'=>$hasdocs]);
+                }
             }
             else {
                 $user=Auth::user();
@@ -65,6 +68,7 @@ class CandidatController extends Controller
             'fonction' => ['required', 'string', 'max:255'],
             'grade_id' => ['required','numeric' ],
             'pays_id' => ['required','numeric' ],
+            'pays_nom' => ['required','string' ],
             'etablissement'=> ['required', 'string', 'max:255'],
             'objective_id' => ['required','numeric'],
 
@@ -111,14 +115,29 @@ class CandidatController extends Controller
     {
         //return (dd( $request['candidat_id']));
         $nbfile=6;// Must do it with aouther ways!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        $data=  $request->all();
+        $validator = Validator::make($data,
+        [
+            'file_1' => 'required|mimes:pdf|max:10000',
+            'file_2' => 'required|mimes:pdf|max:10000',
+            'file_3' => 'required|mimes:pdf|max:10000',
+            'file_4' => 'required|mimes:pdf|max:10000',
+            'file_5' => 'required|mimes:pdf|max:10000',
+            'file_6' => 'required|mimes:pdf|max:10000',
+            ]
+          );
+          if ($validator->fails()) {
+            flash($validator->messages()->first(),'error');
+            return back();//->withInput();
+        }
         
         for($i=1;$i<=$nbfile; $i++){
         
             $candidat_doc= array();
             if( $request['file_'.$i]!= null){
 
-                $fileName =  $request['candidat_id'].'_doc'.$i.'_'.time().'.'. $request->file->extension(); 
-                $filePath = $request->file('file')->storeAs('candidats_doc', $fileName);
+                $fileName =  $request['candidat_id'].'_doc'.$i.'_'.time().'.'. $request['file_'.$i]->extension(); 
+                $filePath = $request->file('file_'.$i)->storeAs('candidats_doc', $fileName);
                 $file_path_to_save='/storage/app/' . $filePath;    
                 
                 $candidat_doc= (['candidat_id'=> $request['candidat_id'],
@@ -183,6 +202,60 @@ class CandidatController extends Controller
             }
         } else abort(404, 'File not found!');
 
+    }
+    public function document_archived( $request)
+    {
+       //dd($request);
+        $com = Document::where(['id'=>$request])->update([
+            'is_deleted' => 1
+        ]);
+        return  back();// Response()->json($com);
+    }
+    
+    public function document_restor(Request $request)
+    {
+        $com = Document::where(['id'=>$request->id])->update([
+            'is_deleted' => 0
+        ]);
+        return Response()->json($com);
+    }
+    public function document_edit(Document $document)
+    {
+        
+        return view('candidat.document.edit')->with(['document' => $document]);
+    }
+    public function document_store(Request $request) 
+    {
+       
+        $data = $request->all();
+        //dd($request->file);
+        $validator = Validator::make($data,
+            [
+                "nom" => ['required', 'string', 'max:255'],
+                'file' => 'required|max:10000', //|mimes: pdf, PDF
+               
+            ]
+        );
+
+        if ($validator->fails()) {
+            flash($validator->messages()->first(),'error');
+            return back();
+        }
+        //dd($request['file']);
+        $idcondidat=Auth::user()->candidat->id;
+       
+        $fileName =  $idcondidat.'_'.$request['nom'].'_'.time().'.pdf';//. $request->file->extension(); 
+        $filePath = $request->file('file')->storeAs('candidats_doc', $fileName);
+        $file_path_to_save='/storage/app/' . $filePath;    
+        
+        $candidat_doc= (['candidat_id'=> $idcondidat,
+                        'nom'=> $request['nom'],
+                        'file_path'=>$file_path_to_save
+                        ]);  
+        Document::create($candidat_doc);
+        flash('Document Successfully Added','success');
+      
+        return redirect('/candidat');
     }
     public function edit()
     {

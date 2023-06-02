@@ -18,6 +18,8 @@ return new class extends Migration
 
             $table->string('nom');
             $table->string('file_path');
+            
+            $table->boolean('is_deleted')->default(false);
             $table->timestamps();
         });
     }

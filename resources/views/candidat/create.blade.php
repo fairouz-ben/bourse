@@ -10,7 +10,7 @@
               <img class="d-block mx-auto mb-4" src="{{asset('ban.png')}}" alt="logo" height="150px" width="600px">
               <h2></h2>
               <p class="lead">{{__('translation.relex_service')}}
-                <b>  {{$user->relex_service->nom_ar}}</b> 
+                <b>  {{Auth::user()->relex_service->name_ar}}</b> 
               </p>
             </div>
             <div class=" row mb-3">   
@@ -39,7 +39,7 @@
                       -
                       <b>{{$user->nom_fr}} {{$user->prenom_fr}} </b>
                         <br/>
-                        {{__('translation.relex_service')}}:<b>  {{$user->relex_service->nom_ar}}</b> 
+                        {{__('translation.relex_service')}}:<b>  {{$user->relex_service->name_ar}}</b> 
                     </div>
                   </div>
                   
@@ -75,7 +75,8 @@
                     </div>
                     <div class="col-md-6">
                       <label for="pays_id" class="form-label">{{__('translation.pays')}}</label>
-                      <select name="pays_id" id="pays_id" class="form-control" required>
+                      <input type="hidden" name="pays_id" id="pays_id" value="1">
+                      {{-- <select name="pays_id" id="pays_id" class="form-control" required>
                         <option value=""> ---</option>
                         @foreach ($pays as $p )
                             @if ($p->zone==1)
@@ -89,8 +90,9 @@
                             @endif
                         @endforeach
 
-                    </select>
-                    @error('pays_id')
+                    </select> --}}
+                    <input type="text" name="pays_nom" id="pays_nom" value="{{ old('pays_nom') }}" class="form-control" required>
+                    @error('pays_nom')
                       <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
                       </span>

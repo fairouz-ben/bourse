@@ -13,27 +13,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <h5>{{Auth::user()->candidat->id}}</h5>
+                    <h5></h5>
                     
-                    <h5>  {{ __('translation.candidat') }}: {{ Auth::user()->nom_ar }}</h5>
+                    <h5>  {{ __('translation.candidat') }}: {{ Auth::user()->nom_ar }} {{ Auth::user()->prenom_ar }}</h5>
                     <p> 
                         {{-- <a href="{{asset($student->file_path)}}"></a> --}}
                         {{ __('translation.note_file_check') }}
-                         <ul>
-                            @if ($docs)
-                            @foreach ($docs as $doc )
-                            <li>
-                                <a href="{{ url('show_uploaded_file/'.$doc->id)}}" target="_blank" >{{ $doc->nom}}   </a>
-                           
-                            </li>
-                           
-                            @endforeach
-                                
-                            @endif
-
-                        </ul>
+                       
                     <br/>  
                     </p>
+                    @include('candidat.list_doc')
                     <div class="row mt-3">
                         <div class="col-12 text-center">
                             <a href="{{ route('print') }}"  target="_blank" class="btn btn-success btn-sm ml-auto"><i class="fa fa-print"></i> {{ __('translation.print') }}</a>
@@ -47,3 +36,5 @@
     </div>
 </div>
 @endsection
+
+

@@ -94,10 +94,10 @@
 
                                     <option value="">----</option>
                                     <option value="1">رئاسة الجامعة</option>
-                                    <option value="2"> الحقوق</option>
-                                    <option value="3"> العلوم الإسلامية</option>
-                                    <option value="4"> الطب</option>
-                                    <option value="5"> الصيدلة</option>
+                                    <option value="2"> كلية الحقوق</option>
+                                    <option value="3"> كلية العلوم الإسلامية</option>
+                                    <option value="4"> كلية الطب</option>
+                                    <option value="5"> كلية الصيدلة </option>
                                     <option value="6"> كلية العلوم </option>
 
                             </select>

@@ -21,9 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('/');
 
-Auth::routes(['verify' => true]);
-
-Route::middleware(['auth', 'verified'])->group( function(){
+Auth::routes();
+//Auth::routes(['verify' => true]); //use it when MustverifyMail
+Route::middleware(['auth'])->group( function(){
     
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -33,9 +33,16 @@ Route::middleware(['auth', 'verified'])->group( function(){
     Route::get('/candidat_doc', [CandidatController::class, 'addDocuments'])->name('documents');
     Route::post('/candidat_doc', [CandidatController::class, 'store_addDocuments'])->name('documents.store');
 
-    Route::get('/student_home', [CandidatController::class, 'candidatIndex'])->name('candidat.home');
+    Route::get('/candidat_home', [CandidatController::class, 'candidatIndex'])->name('candidat.home');
     Route::get('/print',[CandidatController::class, 'print'])->name('print');
     Route::get('/show_uploaded_file/{document}',[CandidatController::class, 'show_uploaded_file'])->name('show_uploaded_file');
+    Route::post('/document_archived/{document}',[CandidatController::class, 'document_archived']);
+    Route::post('/document_restor/{document}',[CandidatController::class, 'document_restor']);
+
+    Route::get('/document_edit/{document}',[CandidatController::class, 'document_edit'])->name('document_edit');
+    //Route::post('/document_update/{document}',[CandidatController::class, 'document_update']);
+    Route::post('/document_update',[CandidatController::class, 'document_update'])->name('document.update');
+    Route::post('/document_store',[CandidatController::class, 'document_store'])->name('document.store');
     
     //http://localhost/master-multi-guard-auth/public/storage/uploads/
     Route::get('/storage/{folder}/{file}.pdf');

@@ -13,6 +13,7 @@ class Candidat extends Model
         'fonction',
         'grade_id',
         'pays_id',
+        'pays_nom',
         'objective_id',
         'etablissement',
         'year_of_last_benefit',

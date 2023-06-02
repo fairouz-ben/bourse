@@ -13,7 +13,7 @@
              
              <div class="card-body text-center">
                 <h5 class="card-title">{{__('translation.title')}}</h5>
-                <h4>  {{$user->relex_service->nom_ar}}</h4>
+                <h4>  {{$user->relex_service->name_ar}}</h4>
 
                 <p class="card-text">
                   <h5>{{__('translation.form_title')}}</h5>

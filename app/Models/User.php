@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
 
-class User extends Authenticatable implements LaratrustUser, MustVerifyEmail
+class User extends Authenticatable implements LaratrustUser //, MustVerifyEmail
 {
     use HasRolesAndPermissions;
     use HasApiTokens, HasFactory, Notifiable;
