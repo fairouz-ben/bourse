@@ -142,6 +142,7 @@ class CandidatController extends Controller
                 
                 $candidat_doc= (['candidat_id'=> $request['candidat_id'],
                                 'nom'=> 'doc_'.$i,
+                                'doc_nom_id'=> $i,
                                 'file_path'=>$file_path_to_save
                                 ]);  
                 Document::create($candidat_doc);
@@ -228,10 +229,10 @@ class CandidatController extends Controller
     {
        
         $data = $request->all();
-        //dd($request->file);
+        //dd($request['doc_nom_id']);
         $validator = Validator::make($data,
             [
-                "nom" => ['required', 'string', 'max:255'],
+                "doc_nom_id" => ['required', 'string', 'max:25'],
                 'file' => 'required|max:10000', //|mimes: pdf, PDF
                
             ]
@@ -244,12 +245,13 @@ class CandidatController extends Controller
         //dd($request['file']);
         $idcondidat=Auth::user()->candidat->id;
        
-        $fileName =  $idcondidat.'_'.$request['nom'].'_'.time().'.pdf';//. $request->file->extension(); 
+        $fileName =  $idcondidat.'_'.$request['doc_nom_id'].'_'.time().'.pdf';//. $request->file->extension(); 
         $filePath = $request->file('file')->storeAs('candidats_doc', $fileName);
         $file_path_to_save='/storage/app/' . $filePath;    
         
         $candidat_doc= (['candidat_id'=> $idcondidat,
-                        'nom'=> $request['nom'],
+                        'nom'=> 'doc_'.$request['doc_nom_id'],
+                        'doc_nom_id'=> $request['doc_nom_id'],
                         'file_path'=>$file_path_to_save
                         ]);  
         Document::create($candidat_doc);

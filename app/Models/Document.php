@@ -11,6 +11,7 @@ class Document extends Model
     protected $fillable = [
         'candidat_id',
         'nom',
+        'doc_nom_id',
         'file_path',
         'is_deleted',
     ];
@@ -19,5 +20,9 @@ class Document extends Model
     public function Candidat()
     {
         return $this->belongsTo(Candidat::class,'candidat_id','id');
+    }
+    public function Doc_nom()
+    {
+        return $this->belongsTo(Doc_nom::class,'doc_nom_id','id');
     }
 }

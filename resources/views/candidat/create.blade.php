@@ -6,13 +6,7 @@
         
        
         <main>
-            <div class="py-5 text-center">
-              <img class="d-block mx-auto mb-4" src="{{asset('ban.png')}}" alt="logo" height="150px" width="600px">
-              <h2></h2>
-              <p class="lead">{{__('translation.relex_service')}}
-                <b>  {{Auth::user()->relex_service->name_ar}}</b> 
-              </p>
-            </div>
+           
             <div class=" row mb-3">   
                 <div class="card-body">
                     @if (session('status'))

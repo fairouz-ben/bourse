@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('doc_noms', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('candidat_id');
-            $table->foreign('candidat_id')->references('id')->on('candidats');
-
-           
-            $table->string('nom');
-            $table->string('file_path');
-            
-            $table->boolean('is_deleted')->default(false);
+            $table->string('nom_ar')->unique();
+            $table->string('nom_fr')->unique();
+            $table->string('code')->unique();
+            $table->string('groupe')->default('0');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('doc_noms');
     }
 };

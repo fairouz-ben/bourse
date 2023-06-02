@@ -20,12 +20,16 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        
         $this->call(Relex_services::class);
         $this->call(Objectives::class);
         $this->call(Grades::class);
+        $this->call(Doc_noms::class); 
         $this->call(PaysSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
+
+        
     }
 }
