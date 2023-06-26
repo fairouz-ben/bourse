@@ -14,7 +14,7 @@
                         <div class="row g-3">
                             <div class="col-md-6 ">
                                 <label for="nom_ar" class="form-label">{{__('translation.name_ar')}}</label>
-                                <input type="text" class="form-control" id="nom_ar" name="nom_ar" placeholder="" value="{{ old('nom_ar') }}" required>
+                                <input type="text" autofocus  class="form-control" id="nom_ar" name="nom_ar" placeholder="" value="{{ old('nom_ar') }}" required>
                                 @error('nom_ar')
                                 <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -61,6 +61,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                   
                                 
                             </div>
                             
@@ -79,7 +80,7 @@
                             <div class="col-md-6">
                             <label for="email" class="form-label text-md-end">{{ __('translation.email') }}</label>
                 
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="votrenom@univ-alger.dz" required autocomplete="email" autofocus>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="votrenom@univ-alger.dz" required autocomplete="email">
                                 <p id="emailerror" style="color: red;"></p>
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">

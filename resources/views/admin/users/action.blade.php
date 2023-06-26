@@ -1,5 +1,5 @@
 
-   <a class=' btn btn-primary' data-value='#' href="#"> Detail</a>
+   <a class=' btn btn-primary' data-value='#' href="#"> uuuu</a>
     
   
 

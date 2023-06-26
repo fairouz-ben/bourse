@@ -21,8 +21,31 @@ class CandidatsDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+        $query = Candidat::query()
+
+        ->join('objectives', 'candidats.objective_id', '=', 'objectives.id')
+        ->join('grades', 'candidats.grade_id', '=', 'grades.id')
+        ->select('candidats.*','grades.titre_ar','objectives.titre_ar as objective_ar')
+        ->where('candidats.is_deleted', '0');
+       
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'admin.candidats.action')
+           // ->addColumn('action', 'admin.candidats.action')
+            ->addColumn('action',function ($data){ 
+               // return $this->getActionColumn($data);
+               return view('admin.candidats.action')->with("data",$data);
+            })
+            ->addColumn('full_name',function ($candidat){
+                return ($candidat->user->nom_ar . ' ' . $candidat->user->prenom_ar);
+            })
+            ->addColumn('nom',function ($candidat){
+                return ($candidat->user->nom_ar);
+            })
+            ->addColumn('grade_ar',function ($candidat){
+                return ($candidat->titre_ar);
+            })
+            ->addColumn('objective',function ($candidat){
+                return ($candidat->objective_ar);
+            })
             ->setRowId('id');
     }
 
@@ -31,16 +54,43 @@ class CandidatsDataTable extends DataTable
      */
     public function query(Candidat $model): QueryBuilder
     {
-        return $model->newQuery();
-        $query = Candidat::query();
+        return $model->newQuery();//->where('is_deleted', '0');
+       // $query = Candidat::query()->where('is_deleted', '0');
+        /*
+        $query = Candidat::query()->select('candidats.*','grades.titre_ar as grade_ar', 'objectives.titre_ar as objective ','objectives.titre_fr as objective_fr')
 
-        $query = Candidat::query()->join('objectives', 'objectives.id', '=', 'candidats.objective_id')
-        ->join('grades', 'grades.id', '=', 'candidats.grade_id')
-        ->where('is_deleted', '0')
-        ->select('candidats.*','grades.titre_ar as grade_ar', 'objectives.titre_ar as objective ','objectives.titre_fr as objective_fr');
+        //->join('objectives', 'candidats.objective_id', '=', 'objectives.id')
+        ->join('grades', 'candidats.grade_id', '=', 'grades.id')
+        ->where('is_deleted', '0');
+        */
 
+        //return $this->applyScopes($query);
+    }
 
-        return $this->applyScopes($query);
+    protected function getActionColumn($data): string
+    {
+        
+        $detailstUrl = route('candidat_details', $data->id);
+        if (  $data->is_deleted  == 1 ){
+        $dt='<li>
+        <form action="'.url("/candidat_enable/".$data->id).'" method="post">
+          @csrf
+          <button type="submit" class="dropdown-item"><i class="bi bi-eye m-1"></i>  ارجاع</button>
+        </form> 
+      </li>  ';
+        } 
+        else {
+        $dt='<li>
+        <form action="'.route('candidat_disable',['candidat'=>$data->id]).'" method="post" enctype="multipart/form-data">
+          @csrf
+          
+           <li><button type="submit" onclick="confirmAction()" class="dropdown-item"><i class="bi bi-archive m-1"></i> حذف</button></li>
+        </form>
+      </li>  '; 
+            }
+        return "  <a class='btn btn-success' data-value='$data->id' target='_blank' href='$detailstUrl'>Details</a> 
+                <button class='edit btn btn-info m-2'data-edit='$data' > <i class='fa fa-edit'></i></button>
+                <br\>   <br\> $dt";
     }
 
     /**
@@ -71,19 +121,20 @@ class CandidatsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
+            Column::computed('action')->title('العمليات')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('id')->hidden()->printable(false)->searchable(false)->exportable(false), 
-            Column::make('full_name'),
-            Column::make('grade_id'),
-            Column::make('grade_ar'),
-            Column::make('fonction'),
-            Column::make('pays_id'),
-            Column::make('objective'),
-            Column::make('objective_fr'),
+            Column::make('full_name')->title('اللقب و الاسم')->searchable(true),
+            Column::make('nom')->title('اللقب  ')->searchable(true),
+            //Column::make('grade_id'),
+            Column::make('grade_ar')->title('الرتبة'),
+            Column::make('fonction')->title('المهنة'),
+            Column::make('pays_nom')->title('البلد المستقبل'),
+            Column::make('objective')->title('الهدف')->searchable(true)->exportable(true),
+           // Column::make('objective_fr'),
           
         ];
     }

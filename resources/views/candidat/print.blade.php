@@ -52,7 +52,7 @@
                   </tr>
                   <tr>
                     <td>{{__('translation.pays')}}</td>
-                    <td>{{$user->candidat->pays->nom_ar}} </td>
+                    <td>{{--$user->candidat->pays->nom_ar---}} {{$user->candidat->pays_nom}}</td>
                     
                   </tr>
                   <tr>

@@ -24,11 +24,11 @@
                   
               <div class="dropdown">
                   <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  Actions
+                    إجراءات
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li> <a type="submit" class="dropdown-item" href="#"><i class="bi bi-pencil-square m-1"></i> تعديل</a></li>
-                    
+                    {{-- <li> <a type="submit" class="dropdown-item" href="#" disabled="true"><i class="bi bi-pencil-square m-1"></i> تعديل</a></li>
+                     --}}
                     @if($doc->is_deleted)
                   <li>
                       <form action="{{url('/document_restor/'.$doc->id)}}" method="post">
@@ -71,9 +71,9 @@
         <div class="modal-body">
             <form action="{{ url('document_store') }}" method="post" enctype="multipart/form-data">{{-- need to use route to easy insert parameter department_id--}}
                 @csrf
-               
+               <input type="hidden" name="idcandidat" value="{{$candidat->id}}">
                 <div class="form-group g-4">
-                    <label class="col-md-6 col-form-label ">{{ __('translation.file') }}: </label>
+                    <label class="col-md-6 col-form-label ">{{ __('translation.file') }}: {{$candidat->id}}</label>
                 
                 </div>
                 <div class="row g-7">
@@ -120,7 +120,7 @@
   
 <script type="text/javascript">
             const confirmAction = () => {
-                const response = confirm("Are you sure you want to Delet the file that?");
+                const response = confirm("Are you sure you want to Delet that file?");
 
                 if (response) {
                     alert("Ok ");

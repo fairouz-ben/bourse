@@ -42,7 +42,10 @@ class CandidatController extends Controller
                 }else
                 {
                     $hasdocs= Document::where(['candidat_id'=>$candidat->id,'is_deleted' => 0 ])->get();
-                return view('candidat.candidatIndex')->with(['candidat'=>$candidat,'docs'=>$hasdocs]);
+                    $grades= Grade::all();
+                    $pays= Pays::all();
+                    $objectives= Objective::all();
+                return view('candidat.candidatIndex')->with(['candidat'=>$candidat,'docs'=>$hasdocs,'grades'=>$grades,'pays'=>$pays,'objectives'=>$objectives]);
                 }
             }
             else {
@@ -56,7 +59,7 @@ class CandidatController extends Controller
             
             }
         }
-        return back();
+        //return back();
     }
     public function store(Request $request)
     {
@@ -64,7 +67,7 @@ class CandidatController extends Controller
         
         $data = $request->all();
         $validator =  Validator::make($data, [
-
+            'user_id'=>['required','unique:candidats,user_id'],
             'fonction' => ['required', 'string', 'max:255'],
             'grade_id' => ['required','numeric' ],
             'pays_id' => ['required','numeric' ],
@@ -72,7 +75,7 @@ class CandidatController extends Controller
             'etablissement'=> ['required', 'string', 'max:255'],
             'objective_id' => ['required','numeric'],
 
-            'year_of_last_benefit' => ['required', 'string', 'max:4'],
+            'year_of_last_benefit' => ['string',],
 
            // 'file' =>'required|mimes:pdf|max:10240',
             
@@ -88,6 +91,35 @@ class CandidatController extends Controller
         Candidat::create( $data );
         
         flash('candidat info Successfully Added','success');
+        
+        return redirect()->route('candidat');
+    }
+    public function update(Candidat $candidat, Request $request){
+
+        $data = $request->all();
+        $validator =  Validator::make($data, [
+
+            'fonction' => ['required', 'string', 'max:255'],
+            'grade_id' => ['required','numeric' ],
+            'pays_id' => ['required','numeric' ],
+            'pays_nom' => ['required','string' ],
+            'etablissement'=> ['required', 'string', 'max:255'],
+            'objective_id' => ['required','numeric'],
+
+            'year_of_last_benefit' => ['string',],
+            
+        ]);
+
+        if ($validator->fails()) {
+            
+            return back()->withInput();
+        }
+
+        $candidat->update(
+            $request->all()
+        );
+        
+        flash('candidat info Successfully Updated','success');
         
         return redirect()->route('candidat');
     }
@@ -123,7 +155,7 @@ class CandidatController extends Controller
             'file_3' => 'required|mimes:pdf|max:10000',
             'file_4' => 'required|mimes:pdf|max:10000',
             'file_5' => 'required|mimes:pdf|max:10000',
-            'file_6' => 'required|mimes:pdf|max:10000',
+            'file_6' => 'mimes:pdf|max:10000',
             ]
           );
           if ($validator->fails()) {
@@ -178,6 +210,26 @@ class CandidatController extends Controller
             
         } return 'error no candadat !';
     }
+    //from admin 
+    
+    public function admin_print(Candidat $candidat)
+    {
+        
+        $user= User::where(['id'=>$candidat->user_id])->get()->first();
+        
+        if( $candidat)
+        { 
+            $documents= Document::where(['candidat_id'=>$candidat->id]);
+            if ($documents)
+            {
+                return view('candidat.print', compact('user','candidat','documents'));
+            } return 'error no documents !';
+            
+            
+        } return 'error no candadat !';
+    }
+
+    //end print 
     public function show_uploaded_file(Document $document)
     {  
        // dd($document);
@@ -189,7 +241,7 @@ class CandidatController extends Controller
       if( $document!= null){
             
                 $file =base_path().$document->file_path; //app_path()  //base_path
-                
+              //  dd($file);
            if (file_exists($file)) {
 
                 $headers = [
@@ -201,7 +253,7 @@ class CandidatController extends Controller
                // echo ('File not found!');
                 abort(404, 'File not found!');
             }
-        } else abort(404, 'File not found!');
+        } else abort(404, 'File not found!!!!!');
 
     }
     public function document_archived( $request)
@@ -227,14 +279,19 @@ class CandidatController extends Controller
     }
     public function document_store(Request $request) 
     {
-       
+        $idcondidat= $request['idcandidat'];//Auth::user()->candidat->id;
+        
+        $this->document_store_2( $request,$idcondidat);
+        return back();
+    }
+    private function document_store_2(Request $request, $idcondidat)
+    {
         $data = $request->all();
-        //dd($request['doc_nom_id']);
         $validator = Validator::make($data,
             [
                 "doc_nom_id" => ['required', 'string', 'max:25'],
                 'file' => 'required|max:10000', //|mimes: pdf, PDF
-               
+                
             ]
         );
 
@@ -242,9 +299,6 @@ class CandidatController extends Controller
             flash($validator->messages()->first(),'error');
             return back();
         }
-        //dd($request['file']);
-        $idcondidat=Auth::user()->candidat->id;
-       
         $fileName =  $idcondidat.'_'.$request['doc_nom_id'].'_'.time().'.pdf';//. $request->file->extension(); 
         $filePath = $request->file('file')->storeAs('candidats_doc', $fileName);
         $file_path_to_save='/storage/app/' . $filePath;    
@@ -255,9 +309,8 @@ class CandidatController extends Controller
                         'file_path'=>$file_path_to_save
                         ]);  
         Document::create($candidat_doc);
-        flash('Document Successfully Added','success');
       
-        return redirect('/candidat');
+        flash('Document Successfully Added','success');
     }
     public function edit()
     {

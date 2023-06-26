@@ -30,6 +30,9 @@ Route::middleware(['auth'])->group( function(){
     Route::get('/candidat', [CandidatController::class, 'index'])->name('candidat');
     Route::post('/candidat', [CandidatController::class, 'store'])->name('candidat.store');
     
+    Route::post('/candidat_update/{candidat}', [CandidatController::class, 'update'])->name('candidat_update');
+    
+    
     Route::get('/candidat_doc', [CandidatController::class, 'addDocuments'])->name('documents');
     Route::post('/candidat_doc', [CandidatController::class, 'store_addDocuments'])->name('documents.store');
 
@@ -50,17 +53,32 @@ Route::middleware(['auth'])->group( function(){
    
     //Route::group([ 'middleware' => ['role:superAdmin'],], function() {
     Route::middleware(['is_admin'])->group( function(){
-       
-         
-      
+
 
         Route::get('/admin',[AdminController::class, 'index'])->name('admin');
-        Route::prefix('candidats')->group(function(){
-            Route::get('/',[AdminController::class, 'candidats_list'])->name('candidats');
 
+        Route::get('students/{status}', [AdminController::class, 'indexusers']);
+
+        Route::prefix('candidats')->group(function(){
+            Route::get('/',[AdminController::class, 'candidats_detail'])->name('candidats');
+        
+            Route::get('/candidats_deleted',[AdminController::class, 'candidats_deleted_list'])->name('candidats_deleted');
+            Route::post('/candidat_enable/{candidat}', [AdminController::class,'candidat_enable'])->name('candidat_enable');
+            Route::post('/candidat_disable/{candidat}', [AdminController::class,'candidat_disable'])->name('candidat_disable');
+            
+            Route::get('/candidat_details/{candidat}',[AdminController::class, 'candidat_details'])->name('candidat_details');
+            
+            Route::patch('/candidatSetEtat/{candidat}',[AdminController::class, 'candidatUpdateEtat'])->name('candidat_setEtat');
+            
+            Route::post('/candidat_store/{candidat}', [AdminController::class, 'update_candidat'])->name('candidat_store');
+        
+            Route::get('/get_print/{candidat}',[CandidatController::class, 'admin_print'])->name('get_print');
         }); 
         Route::prefix('users')->group(function(){
             Route::get('/',[AdminController::class, 'users_list'])->name('users');
+            Route::post('/user_disable/{user}', [AdminController::class,'user_disable'])->name('user_disable');
+            Route::post('/user_enable/{user}', [AdminController::class,'user_enable'])->name('user_enable');
+           
 
         }); 
         Route::group([ 'middleware' => ['role:superAdmin'],], function() {
@@ -68,6 +86,8 @@ Route::middleware(['auth'])->group( function(){
            // Route::get('/admin_register', [AdminRegisterController::class, 'show_register']);
             Route::post('/admin_register', [AdminController::class, 'create'])->name('admin_register');
             Route::get('/admins_list',[AdminController::class, 'admins_list'])->name('admins_list');
+
+            
     
         });   
     });

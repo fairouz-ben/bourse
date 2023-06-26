@@ -22,10 +22,19 @@ class AdminsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'admins.action')
+            
+            ->addColumn('action',function ($data){ 
+                // return $this->getActionColumn($data);
+                return view('admin.admins.action')->with("data",$data);
+            })
             ->addColumn('full_name',function ($user){
                 return ($user->nom_fr . ' ' . $user->prenom_fr);
             })
+            ->setRowClass(function ($data) {
+                if ($data->is_active == '0' ) 
+                return 'table-secondary' ;
+               
+           })
             ->setRowId('id');
     }
 
@@ -34,18 +43,18 @@ class AdminsDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-       // $query = User::query();
-
-        // Change the select query to retrieve specific columns
-        //$query->select('id', 'familyName_fr', 'name_fr','email');
-
-        // Add a condition to retrieve only active users
-       // $query->where('is_admin', '1');
-        ///////
-        $query = User::query()->join('role_user', 'users.id', '=', 'role_user.user_id')
+        
+        $query = User::query()
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'role_user.role_id', '=', 'roles.id')
+                ->select('users.*', User::raw('GROUP_CONCAT(roles.name) as roles'))
+                ->where('is_admin', '1')
+                ->groupBy('users.id', 'users.nom_fr');
+                //->get();
+        /* $query = User::query()->join('role_user', 'users.id', '=', 'role_user.user_id')
         ->join('roles', 'role_user.role_id', '=', 'roles.id')
         ->where('is_admin', '1')
-        ->select('users.*', 'roles.name as role_name');
+        ->select('users.*', 'roles.name as role_name');*/
 
 
         return $this->applyScopes($query);
@@ -67,8 +76,8 @@ class AdminsDataTable extends DataTable
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
+                       // Button::make('csv'),
+                      //  Button::make('pdf'),
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
@@ -92,7 +101,7 @@ class AdminsDataTable extends DataTable
           //  Column::make('name_fr'),
             
             Column::make('email'),
-            Column::make('role_name')->searchable(false),
+            Column::make('roles')->searchable(false),
             
         ];
     }

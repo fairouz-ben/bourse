@@ -124,7 +124,7 @@
                     <div class="col-md-4">
                         <label for="year_of_last_benefit" class="form-label text-md-end">{{ __('translation.year_last') }}</label>
             
-                        <input id="year_of_last_benefit" type="number" min="1980" max="2023" step="1" value="2022"   class="form-control @error('year_of_last_benefit') is-invalid @enderror" name="year_of_last_benefit" required value="{{ old('year_of_last_benefit') }}"  >
+                        <input id="year_of_last_benefit" type="number" min="1980" max="2023" step="1" value="2022"   class="form-control @error('year_of_last_benefit') is-invalid @enderror" name="year_of_last_benefit"  value="{{ old('year_of_last_benefit') }}"  >
             
                             @error('year_of_last_benefit')
                                 <span class="invalid-feedback" role="alert">

@@ -21,7 +21,7 @@ return[
 'form_title'=>'استمارة المعلومات',
 'print'     => ' طباعة إستمارة المعلومات', 
 'candidat'=>'المترشح',
-'name_fr'=>'Nome fr',
+'name_fr'=>'Nom(fr)',
 'name_ar'=>'اللقب',  
 'prenom_ar'=>'الإسم', 
 'prenom_fr'=>'Prenom(fr)', 

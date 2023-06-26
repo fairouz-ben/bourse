@@ -12,4 +12,16 @@
  
 @push('scripts')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+
+    <script type="text/javascript">
+        const confirmAction = () => {
+            const response = confirm("Are you sure you want to disable the user?");
+    
+            if (response) {
+                alert("Ok ");
+            } else {
+                alert("Cancel ");
+            }
+        }
+    </script>
 @endpush

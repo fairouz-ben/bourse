@@ -14,23 +14,11 @@ class EmailFormat implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+       if( !(preg_match('/\w+(.)?\w+(@univ-alger.dz)/', $value)))
+       {
+        $fail(trans('validation.email_format'));
+       // $fail('validation.email_format')->translate(); // new one
+       }
         
-    }
-    public function passes($attribute, $value)
-    {
-        // Define your specific email format here
-        $pattern = '/\w+(.)?\w+(@univ-alger.dz)/ig';
-
-        return preg_match($pattern, $value);
-    }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
-    public function message()
-    {
-        return (trans('validation.email_format'));//'The email must be in a specific format (e.g., user@univ-alger.dz).';
     }
 }

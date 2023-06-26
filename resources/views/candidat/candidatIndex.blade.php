@@ -5,7 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header"><h4>{{ __('translation.info_personal') }}</h4></div>
+                <div class="card-header"><h4>{{ __('translation.info_personal') }}</h4>
+                
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -16,10 +18,17 @@
                     <h5></h5>
                     
                     <h5>  {{ __('translation.candidat') }}: {{ Auth::user()->nom_ar }} {{ Auth::user()->prenom_ar }}</h5>
+                        <div style="direction: ltr">
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#EditCandidat">
+                                <i class="bi bi-credit-card-2-back"></i>  تعديل المعلومات
+                            </button>
+                        </div>
+                    
+                
                     <p> 
                         {{-- <a href="{{asset($student->file_path)}}"></a> --}}
                         {{ __('translation.note_file_check') }}
-                       
+                    
                     <br/>  
                     </p>
                     @include('candidat.list_doc')
@@ -32,9 +41,10 @@
                     dossier d'inscription. --}}
                 </div>
             </div>
+            </div>
         </div>
     </div>
-</div>
+    @include('candidat.modalEditCandidat')
 @endsection
 
 

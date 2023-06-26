@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use App\Rules\IsCompositeUnique_Invoke;
 use App\Rules\EmailFormat;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
+use App\Rules\IsColumnsUnique;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -51,18 +52,29 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = array(
+            'date_nais.unique' => 'اللقب والاسم الأول والتاريخ موجودان بالفعل!',
+            'prenom_fr.unique' => 'اللقب والاسم الأول والتاريخ موجودان بالفعل!',//' nom ,prenom et date  existe déja!',
+        );
+
         return Validator::make($data, [
-            'nom_ar' => ['required', 'string', 'max:255', new IsCompositeUnique_Invoke('users', ['nom_ar' => $data['nom_ar'], 'prenom_ar' => $data['prenom_ar'], 'date_nais' => $data['date_nais']])],
+            'nom_ar' => ['required', 'string', 'max:255'],
             'nom_fr' => ['required', 'string', 'max:255'],
-            'prenom_ar' => ['required', 'string', 'max:255'],
-            'prenom_fr' => ['required', 'string', 'max:255'],
-            'date_nais' => ['required', 'string', 'max:10'],
-            
+            'prenom_ar' => ['required', 'string', 'max:255', ],
+            'prenom_fr' => ['required', 'string', 'max:255',],// 
+            'date_nais' => ['required', 'string', 'max:10',
+         
+                            new IsColumnsUnique('users', ['nom_ar' => $data['nom_ar'], 'prenom_ar' => $data['prenom_ar'], 'date_nais' => $data['date_nais']]),
+                            new IsColumnsUnique('users', ['nom_fr' => $data['nom_fr'], 'prenom_fr' => $data['prenom_fr'], 'date_nais' => $data['date_nais']]),
+                 
+                            ],
             'phone' => ['required', 'string', 'max:10'],
             'relex_service_id'=> ['required', 'numeric', 'max:10'],
-            'email' => ['required', new EmailFormat($data['email']),'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required','string', 'email', 'max:255', 'unique:users',new EmailFormat(),
+           
+        ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        ],$messages);
     }
 
     /**
@@ -73,6 +85,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $pattern = '/\w+(.)?\w+(@univ-alger.dz)/';
+
+        $mailform= preg_match($pattern, $data['email']);
+       // dd( $mailform);
+       
+
         $user = User::create([
             'relex_service_id' => $data['relex_service_id'],
             'nom_ar' => $data['nom_ar'],
@@ -89,6 +107,7 @@ class RegisterController extends Controller
         $user->addRole('candidat');
         return  $user;
        // return back()->with('success','Candidat created successfully!');
-        
+    
+   
     }
 }

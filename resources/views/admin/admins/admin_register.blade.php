@@ -11,99 +11,136 @@
                     <form method="POST" action="{{ route('admin_register') }}">
                         @csrf
 
-                        <div class="row mb-3">
-                            <label for="familyName_fr" class="col-md-4 col-form-label text-md-end">{{ __('translation.name_fr') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="familyName_fr" type="text" class="form-control @error('familyName_fr') is-invalid @enderror" name="familyName_fr" value="{{ old('familyName_fr') }}" required autocomplete="familyName_fr" autofocus>
-
-                                @error('familyName_fr')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                       
+                        <div class="row g-3">
+                            <div class="col-md-6 ">
+                                <label for="nom_ar" class="form-label">{{__('translation.name_ar')}}</label>
+                                <input type="text" autofocus  class="form-control" id="nom_ar" name="nom_ar" placeholder="" value="{{ old('nom_ar') }}" required>
+                                @error('nom_ar')
+                                <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="name_fr" class="col-md-4 col-form-label text-md-end">{{ __('translation.prenom_fr') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name_fr" type="text" class="form-control @error('name_fr') is-invalid @enderror" name="name_fr" value="{{ old('name_fr') }}" required autocomplete="name_fr" autofocus>
-
-                                @error('name_fr')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                
+                            <div class="col-md-6 ">
+                              <label for="prenom_ar" class="form-label">{{__('translation.prenom_ar')}}</label>
+                              <input type="text" class="form-control" id="prenom_ar"  name="prenom_ar" placeholder="" value="{{ old('prenom_ar') }}"  required>
+                              @error('prenom_ar')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="birthday" class="col-md-4 col-form-label text-md-end">{{ __('translation.date_nais') }}</label>
-
                             <div class="col-md-6">
-                                <input id="birthday" type="date" class="form-control @error('birthday') is-invalid @enderror" name="birthday" value="{{ old('birthday') }}" required autocomplete="birthday" autofocus>
-
-                                @error('birthday')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                              <label for="nom_fr" class="form-label">{{__('translation.name_fr')}}</label>
+                              <input type="text" class="form-control" id="nom_fr"  name="nom_fr" value="{{ old('nom_fr') }}" required>
+                              @error('nom_fr')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                              @enderror
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="transfert_type" class="col-md-4 col-form-label text-md-end">{{ __('transfert_type') }}</label>
-
+                
                             <div class="col-md-6">
-                                <input id="transfert_type" type="text" class="form-control @error('transfert_type') is-invalid @enderror" name="transfert_type" value="{{ old('transfert_type') }}" required autocomplete="transfert_type" autofocus>
-
-                                @error('transfert_type')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                              <label for="prenom_fr" class="form-label">{{__('translation.prenom_fr')}}</label>
+                              <input type="text" class="form-control" id="prenom_fr"  name="prenom_fr" value="{{ old('prenom_fr') }}" required>
+                              @error('prenom_fr')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                              @enderror
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('translation.email') }}</label>
-
+                            
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <label for="date_nais" class="form-label text-md-end">{{ __('translation.date_nais') }}</label>
 
+                                
+                                    <input id="date_nais" type="date" class="form-control @error('date_nais') is-invalid @enderror" name="date_nais" value="{{ old('date_nais') }}" required >
+                                    @error('date_nais')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                   
+                                
+                            </div>
+                            
+                                <div class="col-md-6 ">
+                                    <label for="phone" class=" form-label ">{{ __('translation.phone') }}</label>
+                                    
+                                        <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}">
+                                        @error('phone')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    
+                                </div>
+                            
+                            <div class="col-md-6">
+                            <label for="email" class="form-label text-md-end">{{ __('translation.email') }}</label>
+                
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="votrenom@univ-alger.dz" required autocomplete="email">
+                                <p id="emailerror" style="color: red;"></p>
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
-                            </div>
+                        
                         </div>
+                        <div class="col-md-6 ">
+                            <label for="relex_service" class="form-label">{{__('translation.relex_service')}}</label>
+                            <select name="relex_service_id" id="relex_service_id" class="form-control" required>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('translation.password') }}</label>
+                                    <option value="">----</option>
+                                    <option value="1">رئاسة الجامعة</option>
+                                    <option value="2"> كلية الحقوق</option>
+                                    <option value="3"> كلية العلوم الإسلامية</option>
+                                    <option value="4"> كلية الطب</option>
+                                    <option value="5"> كلية الصيدلة </option>
+                                    <option value="6"> كلية العلوم </option>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            </select>
+                            @error('relex_service')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('translation.password-confirm') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
+                        
+                        <div class="col-md-6">
+                            <label for="password" class="form-label text-md-end">{{ __('translation.password') }}</label>
+                
+                            
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                                    <span class="text-danger"> 
+                                        <br/>
+                                    {{__('validation.password_form_note')}}    </span>
+                                    @error('password')
+                                      <span class="invalid-feedback pt-1" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                              
+                          </div>
+                
+                        <div class="col-md-6">
+                            <label for="password-confirm" class="form-label text-md-end">{{ __('translation.password-confirm') }}</label>
+                
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required >
+                            
                         </div>
+                        
+                       
+                        
+                
 
                         <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('translation.Inscription') }}
+                            <div class="col-md-6 pt-3 offset-md-4">
+                                <button type="submit" class="w-100 btn btn-lg btn-primary">
+                                    {{ __('translation.register') }}
                                 </button>
                             </div>
                         </div>

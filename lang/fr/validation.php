@@ -14,7 +14,7 @@ return [
     */
     'ForgotPassword'=>'Mot de passe oublié?',
     'password_form_note'=>"Votre mot de passe doit comporter au moins 8 caractères.",
-    'email_format'=>"L'e-mail doit être dans un format spécifique (par exemple, utilisateur@univ-alger.dz).",
+    'email_format'=>"L'e-mail doit être dans un format institutional (par exemple, utilisateur@univ-alger.dz).",
     'accepted' => 'The :attribute must be accepted.',
     'accepted_if' => 'The :attribute must be accepted when :other is :value.',
     'active_url' => 'The :attribute is not a valid URL.',

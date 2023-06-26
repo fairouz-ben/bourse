@@ -32,6 +32,8 @@ class User extends Authenticatable implements LaratrustUser //, MustVerifyEmail
         'relex_service_id',
         'email',
         'password',
+        'is_admin',
+        'is_active',
     ];
 
     /**

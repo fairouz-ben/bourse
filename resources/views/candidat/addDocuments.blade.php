@@ -68,7 +68,9 @@
                 </div>--}}
                 <div class="row g-3">
                   <label for="file_1" class="col-md-6 col-form-label ">{{ __('translation.file') }} 1
+                    <span style="color:red;font-weight:bold; font-size:x-large">*</span>
                     •	طلب خطي ممضي من طرف المسؤول المباشر
+                    
                   </label>
       
                   <div class="col-md-4">
@@ -83,11 +85,12 @@
               </div>
               <div class="row g-3">
                 <label for="file_2" class="col-md-6 col-form-label ">{{ __('translation.file') }} 2
-                  •	مقرر التعيين و شهادة عمل.*
+                  <span style="color:red;font-weight:bold; font-size:x-large">*</span>
+                  •	مقرر التعيين و شهادة عمل.
                 </label>
     
                 <div class="col-md-4">
-                    <input id="file2_" name="file_2"  type="file" accept="application/pdf" class="form-control @error('file_2') is-invalid @enderror"  required  >
+                    <input id="file_2" name="file_2"  type="file" accept="application/pdf" class="form-control @error('file_2') is-invalid @enderror"  required  >
     
                     @error('file_2')
                         <span class="invalid-feedback" role="alert">
@@ -97,8 +100,10 @@
                 </div>
             </div>
             <div class="row g-3">
-              <label for="file3" class="col-md-6 col-form-label ">{{ __('translation.file') }} 3
-                •	شهادة التسجيل في الدكتوراه ابتداءا من التسجيل الثاني. / شهادة جامعية أو شهادة معادلة لها*</label>
+              <label for="file_3" class="col-md-6 col-form-label ">{{ __('translation.file') }} 3
+                <span style="color:red;font-weight:bold; font-size:x-large">*</span>
+                •شهادة جامعية أو شهادة معادلة لها
+              </label>
   
               <div class="col-md-4">
                   <input id="file_3" name="file_3"  type="file" accept="application/pdf" class="form-control @error('file_3') is-invalid @enderror"  required  >
@@ -112,9 +117,9 @@
           </div>
           <div class="row g-3">
             <label for="file_4" class="col-md-6 col-form-label ">{{ __('translation.file') }} 4
+              <span style="color:red;font-weight:bold; font-size:x-large">*</span>
               •	نسخة من الصفحة الأولى لجواز السفر
             </label>
-
             <div class="col-md-4">
                 <input id="file_4" name="file_4"  type="file" accept="application/pdf" class="form-control @error('file_4') is-invalid @enderror"  required  >
 
@@ -127,6 +132,7 @@
         </div>
         <div class="row g-3">
           <label for="file_5" class="col-md-6 col-form-label ">{{ __('translation.file') }} 5
+            <span style="color:red;font-weight:bold; font-size:x-large">*</span>
             •	مشروع عمل يشمل كل الأهداف و المنهجية من التربص موقع عليه من طرف المسؤول المباشر * أو من طرف المشرف على الأطروحة بالنسبة للأساتذة المساعدين.*
           </label>
 
@@ -144,9 +150,10 @@
         <label for="file_6" class="col-md-6 col-form-label ">{{ __('translation.file') }} 6
           •	تقديم رسالة استقبال من طرف الهيئة المستقبلة أو البحثية في الخارج ذات قدرات علمية و تكنولوجية عالية مع التقييد بتوصيات الوزارة الوصية في مجال البلدان المستقبلة خاصة بطلبة الدكتوراه 
         </label>
+        <span></span>
 
         <div class="col-md-4">
-            <input id="file_6" name="file_6"  type="file" accept="application/pdf" class="form-control @error('file_6') is-invalid @enderror"  required  >
+            <input id="file_6" name="file_6"  type="file" accept="application/pdf" class="form-control @error('file_6') is-invalid @enderror"  >
 
             @error('file_6')
                 <span class="invalid-feedback" role="alert">

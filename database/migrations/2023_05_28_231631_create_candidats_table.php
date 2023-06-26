@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('candidats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->unique();
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->unsignedBigInteger('grade_id');
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('year_of_last_benefit')->nullable();
             
             $table->string('document')->nullable();
-            $table->enum('etat' ,['Accepté','Refusé','Non traité'])->default('Non traité');
+            $table->enum('etat' ,['Accepté','Refusé','Non traité','Acceptée sous réserve'])->default('Non traité');
             $table->mediumText('motif')->nullable();
             $table->string('remaque')->nullable();
             $table->boolean('is_deleted')->default(false);
