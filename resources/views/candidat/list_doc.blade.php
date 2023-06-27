@@ -1,4 +1,8 @@
 <div class="table-redoconsive">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <i class="bi bi-file-plus"></i> اضافة ملف
+  </button> 
+
     <table  id="documents-table" class="table table-striped table-sm" style="min-height: 200px">
       <thead>
         <tr>
@@ -8,18 +12,15 @@
           <th scope="col">Actions</th>
         </tr>
       </thead>
-     
+      
       <tbody>
-     
         @foreach ($docs as $doc)
         
         <tr>
             <td>{{ $loop->iteration }}</td>
             <td>
                 <a href="{{ url('show_uploaded_file/'.$doc->id)}}" target="_blank" >{{ $doc->doc_nom->nom_ar}}   </a>
-                           
             </td>
-           
             <td>
                   
               <div class="dropdown">
@@ -54,9 +55,7 @@
         
       </tbody>
     </table>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <i class="bi bi-file-plus"></i> اضافة ملف
-          </button> 
+
     </div>
 
 
@@ -73,7 +72,7 @@
                 @csrf
                <input type="hidden" name="idcandidat" value="{{$candidat->id}}">
                 <div class="form-group g-4">
-                    <label class="col-md-6 col-form-label ">{{ __('translation.file') }}: {{$candidat->id}}</label>
+                    <label class="col-md-6 col-form-label ">{{ __('translation.file') }}: </label>
                 
                 </div>
                 <div class="row g-7">

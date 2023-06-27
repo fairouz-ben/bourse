@@ -49,6 +49,7 @@ class AdminsDataTable extends DataTable
                 ->join('roles', 'role_user.role_id', '=', 'roles.id')
                 ->select('users.*', User::raw('GROUP_CONCAT(roles.name) as roles'))
                 ->where('is_admin', '1')
+                ->whereNot('users.id', 1)
                 ->groupBy('users.id', 'users.nom_fr');
                 //->get();
         /* $query = User::query()->join('role_user', 'users.id', '=', 'role_user.user_id')

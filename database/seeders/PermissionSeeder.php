@@ -20,6 +20,11 @@ class PermissionSeeder extends Seeder
                 'description' => 'candidat@list'
             ],
             [
+                'name' => 'candidat@listAll',
+                'display_name' => 'read candidats all list',
+                'description' => 'candidat@list all'
+            ],
+            [
                 'name' => 'candidat@create',
                 'display_name' => 'Create candidat',
                 'description' => 'Create user candidat and'

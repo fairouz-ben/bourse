@@ -12,6 +12,7 @@
 
     </h6>
     <ul class="nav flex-column mb-2">
+      @if(Auth::user()->hasRole('candidat'))
       <li class="nav-item">
         <a class="nav-link" href="{{route('candidat')}}">
           <span data-feather="file-text"></span>
@@ -24,6 +25,7 @@
          تحميل الملفات
         </a>
         </li>--}}
+        @endif
         @if(Auth::user()->hasRole('manager'))
         <li class="nav-item">
             <a class="nav-link" href="{{url('/candidats')}}">

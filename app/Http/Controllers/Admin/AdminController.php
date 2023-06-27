@@ -40,12 +40,13 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        //return view('admin.dashboard');
+        return redirect()->route('candidats');
     }
     public function candidats_detail(Request $request =null,View_candidatsDataTable $dataTable)
     {
         $dataTable->setServiceId(Auth::user()->relex_service_id);
-        if ((Auth::user()->hasRole('superAdmin'))) {
+        if ((Auth::user()->hasPermission('candidat@listAll'))) {
             if($request->input('relex_service_id')=='all')
                 $dataTable->setServiceId(''); 
                 else  $dataTable->setServiceId($request->input('relex_service_id')); 

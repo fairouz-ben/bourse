@@ -34,19 +34,19 @@ class CandidatController extends Controller
             if( $candidat)
             {
                 $hasdoc=Document::where(['candidat_id'=>$candidat->id])->get()->first();
-                if(!$hasdoc){
+               /* if(!$hasdoc){
 
                     //$this->addDocuments();
                     return redirect()->route('documents');
 
                 }else
-                {
+                {*/
                     $hasdocs= Document::where(['candidat_id'=>$candidat->id,'is_deleted' => 0 ])->get();
                     $grades= Grade::all();
                     $pays= Pays::all();
                     $objectives= Objective::all();
                 return view('candidat.candidatIndex')->with(['candidat'=>$candidat,'docs'=>$hasdocs,'grades'=>$grades,'pays'=>$pays,'objectives'=>$objectives]);
-                }
+                //}
             }
             else {
                 $user=Auth::user();

@@ -7,7 +7,7 @@
                 {{$title}}
                 @endif
             </div>
-            @if(Auth::user()->hasRole('superAdmin'))
+            @if(Auth::user()->hasPermission('candidat@listAll')) 
             <form id="filter-form" class="form-group">
                 @csrf
                 <div class="row g-3 align-items-center">
